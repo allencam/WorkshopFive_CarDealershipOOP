@@ -19,16 +19,7 @@ public class DealershipFileManager {
             // Getting inventory
             while((input = bufferedReader.readLine()) != null) {
                 String[] vehicleInfo = input.split("\\|");
-                int vin = Integer.parseInt(vehicleInfo[0]);
-                int year = Integer.parseInt(vehicleInfo[1]);
-                String make = vehicleInfo[2];
-                String model = vehicleInfo[3];
-                String vehicleType = vehicleInfo[4];
-                String color = vehicleInfo[5];
-                int odometer = Integer.parseInt(vehicleInfo[6]);
-                double price = Double.parseDouble(vehicleInfo[7]);
-
-                Vehicle vehicle = new Vehicle(vin,year,make,model,vehicleType,color,odometer,price);
+                Vehicle vehicle = createVehicle(vehicleInfo);
                 dealership.addVehicle(vehicle);
             }
             bufferedReader.close();
@@ -38,6 +29,21 @@ public class DealershipFileManager {
         }
         return null;
     }
+
+    public static Vehicle createVehicle(String[] vehicleInfo) { // Factory method made in case we wanted to add different vehicle types in the future, can implement switch statement
+        int vin = Integer.parseInt(vehicleInfo[0]);
+        int year = Integer.parseInt(vehicleInfo[1]);
+        String make = vehicleInfo[2];
+        String model = vehicleInfo[3];
+        String vehicleType = vehicleInfo[4];
+        String color = vehicleInfo[5];
+        int odometer = Integer.parseInt(vehicleInfo[6]);
+        double price = Double.parseDouble(vehicleInfo[7]);
+        // Switch can go here for handling motorcycles, RVs, boats, etc.
+
+        return new Vehicle(vin,year,make,model,vehicleType,color,odometer,price);
+    }
+
 
     public static void saveDealership(Dealership dealership) {
         try {
