@@ -2,8 +2,8 @@ package com.ps;
 
 public class SalesContract extends Contract {
     private float salesTaxAmount;
-    private int recordingFee;
-    private int processingFee;
+    private float recordingFee;
+    private float processingFee;
     boolean wantToFinance;
 
     public SalesContract(boolean wantToFinance) {
@@ -20,7 +20,7 @@ public class SalesContract extends Contract {
 
     public SalesContract(String dateOfContract, String customerName, String customerEmail, Vehicle vehicleSold, double totalPrice, double monthlyPayment, boolean wantToFinance) {
         super(dateOfContract, customerName, customerEmail, vehicleSold, totalPrice, monthlyPayment);
-        this.salesTaxAmount = 1.05f;
+        this.salesTaxAmount = (float) (0.05f * vehicleSold.getPrice());
         this.recordingFee = 100;
         if(vehicleSold.getPrice() < 10_000) {
             this.processingFee = 295;
@@ -63,7 +63,7 @@ public class SalesContract extends Contract {
         this.salesTaxAmount = salesTaxAmount;
     }
 
-    public int getRecordingFee() {
+    public float getRecordingFee() {
         return recordingFee;
     }
 
@@ -71,7 +71,7 @@ public class SalesContract extends Contract {
         this.recordingFee = recordingFee;
     }
 
-    public int getProcessingFee() {
+    public float getProcessingFee() {
         return processingFee;
     }
 
@@ -85,5 +85,14 @@ public class SalesContract extends Contract {
 
     public void setWantToFinance(boolean wantToFinance) {
         this.wantToFinance = wantToFinance;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("SALE|%s|%s|%s|%s|%.2f|%.2f|%.2f|%.2f|%s|%.2f",
+                this.dateOfContract, this.customerName, this.customerEmail,
+                vehicleSold.toString(), this.salesTaxAmount, this.recordingFee,
+                this.processingFee, this.getTotalPrice(), this.wantToFinance,
+                this.monthlyPayment);
     }
 }
